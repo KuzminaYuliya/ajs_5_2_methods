@@ -1,7 +1,7 @@
 export default class Character {
   constructor(name, type, health = 100, level = 1) {
-    if (name.length < 2 || name.length > 10) {
-      return new Error('Неверные данные');
+    if (name.length < 2 || name.length > 10 || typeof type !== 'string') {
+      throw new Error('Неверные данные');
     }
     this.name = name;
     this.type = type;
@@ -10,19 +10,24 @@ export default class Character {
     if (type === 'Bowerman') {
       this.attack = 25;
       this.defence = 25;
-    } else if (type === 'Daemon') {
+    }
+    if (type === 'Daemon') {
       this.attack = 10;
       this.defence = 40;
-    } else if (type === 'Magician') {
+    }
+    if (type === 'Magician') {
       this.attack = 10;
       this.defence = 40;
-    } else if (type === 'Swordsman') {
+    }
+    if (type === 'Swordsman') {
       this.attack = 40;
       this.defence = 10;
-    } else if (type === 'Undead') {
+    }
+    if (type === 'Undead') {
       this.attack = 25;
       this.defence = 25;
-    } else if (type === 'Zombie') {
+    }
+    if (type === 'Zombie') {
       this.attack = 40;
       this.defence = 10;
     }
@@ -34,14 +39,12 @@ export default class Character {
       this.attack = +this.attack + (this.attack * 20) / 100;
       this.defence = +this.defence + (this.defence * 20) / 100;
       this.health = 100;
-    } else return Error('Нельзя повысить level умершего');
-    return this;
+    } else throw new Error('Нельзя повысить level умершего');
   }
 
   damage(points) {
     if (this.health > 0) {
       this.health -= points * (1 - this.defence / 100);
-    } else return Error('Уже умер');
-    return this;
+    } else throw new Error('Уже умер');
   }
 }
